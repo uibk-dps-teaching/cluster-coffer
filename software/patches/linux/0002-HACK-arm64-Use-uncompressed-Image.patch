@@ -1,0 +1,29 @@
+From b11bceb06f59e21f07a958436f4810b4f6b8f478 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <daniel@dps.uibk.ac.at>
+Date: Mon, 25 Mar 2019 13:44:07 +0100
+Subject: [PATCH 2/3] HACK: arm64: Use uncompressed Image
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Daniel Gröber <daniel@dps.uibk.ac.at>
+---
+ arch/arm64/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
+index b025304bde46..c1ad2f2cea71 100644
+--- a/arch/arm64/Makefile
++++ b/arch/arm64/Makefile
+@@ -131,7 +131,7 @@ core-$(CONFIG_EFI_STUB) += $(objtree)/drivers/firmware/efi/libstub/lib.a
+ 
+ # Default target when executing plain make
+ boot		:= arch/arm64/boot
+-KBUILD_IMAGE	:= $(boot)/Image.gz
++KBUILD_IMAGE	:= $(boot)/Image
+ 
+ all:	Image.gz
+ 
+-- 
+2.11.0
+

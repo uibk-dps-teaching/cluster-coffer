@@ -1,0 +1,8 @@
+*.h         eol=lf
+*.hpp       eol=lf
+*.c         eol=lf
+*.cpp       eol=lf
+*.md        eol=lf
+*.vcxproj*  eol=crlf
+*.cppproj   eol=crlf
+*.atsln     eol=crlf

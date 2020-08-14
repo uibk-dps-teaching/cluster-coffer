@@ -1,0 +1,6 @@
+Reference, Quantity, Value, Footprint, Datasheet, DigikeyPN
+C1 C2 C3 C4 C5 C6 ,6,"CP1","Capacitor_THT:CP_Radial_D5.0mm_P2.50mm","~"
+J1 J2 J3 J4 J5 J6 ,6,"Conn_01x03_Male","Connector_Molex:Molex_KK-254_AE-6410-03A_1x03_P2.54mm_Vertical","~"
+J7 J8 ,2,"Conn_01x04_Male","xess:xess-MOLEX-8981-04P","~"
+J10 J11 J12 J13 J9 ,5,"Screw_Terminal_01x02","ccpdu:284391-2","https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=284391&DocType=Customer+Drawing&DocLang=English","A98159-ND"
+SW1 SW2 SW3 SW4 ,4,"SW_SPST","cc:MTS-101-A2","https://www.pollin.de/productdownloads/D420430D.PDF"

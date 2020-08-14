@@ -1,0 +1,42 @@
+From 9ca35781a98ae89a38ef785418b6d7695ccb90f7 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <daniel@dps.uibk.ac.at>
+Date: Tue, 12 Mar 2019 15:03:24 +0100
+Subject: [PATCH 5/5] HACK: Disable sdmmc detect gpio
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Without this booting(?) fails with MMC timeouts
+
+Signed-off-by: Daniel Gröber <daniel@dps.uibk.ac.at>
+---
+ arch/arm/dts/rk3399-nanopi4.dtsi | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/arch/arm/dts/rk3399-nanopi4.dtsi b/arch/arm/dts/rk3399-nanopi4.dtsi
+index ecd14c8039..16ae655462 100644
+--- a/arch/arm/dts/rk3399-nanopi4.dtsi
++++ b/arch/arm/dts/rk3399-nanopi4.dtsi
+@@ -521,10 +521,6 @@
+ 	};
+ 
+ 	sdmmc {
+-		sdmmc0_det_l: sdmmc0-det-l {
+-			rockchip,pins = <0 RK_PA7 RK_FUNC_GPIO &pcfg_pull_up>;
+-		};
+-
+ 		sdmmc0_pwr_h: sdmmc0-pwr-h {
+ 			rockchip,pins = <0 RK_PA1 RK_FUNC_GPIO &pcfg_pull_none>;
+ 		};
+@@ -582,7 +578,7 @@
+ 	cd-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
+ 	disable-wp;
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&sdmmc_bus4 &sdmmc_clk &sdmmc_cmd &sdmmc0_det_l>;
++	pinctrl-0 = <&sdmmc_bus4 &sdmmc_clk &sdmmc_cmd>;
+ 	sd-uhs-sdr104;
+ 	vmmc-supply = <&vcc3v0_sd>;
+ 	vqmmc-supply = <&vcc_sdio>;
+-- 
+2.11.0
+

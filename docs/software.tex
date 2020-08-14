@@ -1,0 +1,40 @@
+\chapter{Software}
+
+This chapter explains the software setup of the head and compute nodes.
+
+Software:
+
+\begin{itemize}
+	\item \href{https://www.denx.de/wiki/U-Boot}{U-Boot}
+	\item \href{https://www.debian.org/}{Debian}
+\end{itemize}
+
+\section{Head Node}
+
+As OS a custom Debian image is used and stored on the SD card.
+U-Boot, also present on the SD card, is used as bootloader.
+The project repository contains a collection of scripts which builds the bootloader and image for you.
+
+All compute nodes are listed in the head node's hosts file.
+It's IP address is static.
+It runs a DHCP service for the compute nodes.
+
+A service writes the \texttt{authorized\_keys} file for the compute nodes.
+
+At the point of writing we did not manage to get the M.2 SSD drive to work.
+
+\section{Compute Node}
+
+The compute nodes use U-Boot as bootloader on their SD cards.
+However, the OS image is located in the head node's eMMC memory and loaded via TFTP.
+The head node's IP address and kernel image path are hardcoded in U-Boot.
+
+All compute nodes share the same OS image, which is mounted read-only.
+OverlayFS is used to enable writing.
+All changes are stored in RAM, hence they are lost on reboot.
+
+IPs are determined via DHCP.
+
+\subsection{INA219}
+
+The power measurement values can be read from somewhere in \texttt{/sys/class/hwmon}.

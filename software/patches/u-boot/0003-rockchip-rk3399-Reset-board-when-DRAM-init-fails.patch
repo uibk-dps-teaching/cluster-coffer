@@ -1,0 +1,35 @@
+From b495453da7ad19336d2c36a00d1a23f1c84273a1 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <daniel@dps.uibk.ac.at>
+Date: Thu, 14 Feb 2019 12:26:21 +0100
+Subject: [PATCH 3/5] rockchip: rk3399: Reset board when DRAM init fails
+
+Spurious DRAM init failures where observed during reboot-loop
+testing. Resetting on failure seems to work around the issue.
+---
+ arch/arm/mach-rockchip/rk3399-board-spl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/mach-rockchip/rk3399-board-spl.c b/arch/arm/mach-rockchip/rk3399-board-spl.c
+index ccc136f388..5f60409d42 100644
+--- a/arch/arm/mach-rockchip/rk3399-board-spl.c
++++ b/arch/arm/mach-rockchip/rk3399-board-spl.c
+@@ -11,6 +11,7 @@
+ #include <spl.h>
+ #include <spl_gpio.h>
+ #include <syscon.h>
++#include <sysreset.h>
+ #include <asm/io.h>
+ #include <asm/arch/bootrom.h>
+ #include <asm/arch/clock.h>
+@@ -246,7 +247,7 @@ void board_init_f(ulong dummy)
+ 	ret = uclass_get_device(UCLASS_RAM, 0, &dev);
+ 	if (ret) {
+ 		pr_err("DRAM init failed: %d\n", ret);
+-		return;
++                sysreset_walk_halt(SYSRESET_COLD);
+ 	}
+ }
+ 
+-- 
+2.11.0
+

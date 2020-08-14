@@ -1,0 +1,8 @@
+*.kicad_pcb-bak
+*.bak
+out/
+*-lib-table
+*.bck
+*.csv
+*.net
+*.xml

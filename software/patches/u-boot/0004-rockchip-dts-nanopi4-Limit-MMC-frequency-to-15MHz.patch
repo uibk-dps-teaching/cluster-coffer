@@ -1,0 +1,129 @@
+From 01563428fb10b6e5f9bcef72c1d0e80c7928c7b0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <daniel@dps.uibk.ac.at>
+Date: Mon, 18 Mar 2019 12:36:41 +0100
+Subject: [PATCH 4/5] rockchip: dts: nanopi4: Limit MMC frequency to 15MHz
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+On NanoPI-M4 after rebooting Linux U-Boot SPL fails to communicate with
+the MMC (command timeouts) and aborts. Limiting the MMC frequency seems to
+let the boot continue despite the timeouts.
+
+Current state of log with MMC `#define DEBUG` in drivers/mmc/dw_mmc.c and
+env/mmc.c:
+
+With this patch:
+```
+U-Boot SPL board init
+Trying to boot from MMC1
+Buswidth = 0, clock: 0
+Buswidth = 1, clock: 0
+Buswidth = 1, clock: 400000
+Sending CMD0
+Sending CMD8
+Sending CMD55
+Sending CMD41
+Sending CMD55
+Sending CMD41
+Sending CMD2
+Sending CMD3
+Sending CMD9
+Sending CMD7
+Sending CMD55
+Sending CMD51
+Sending CMD6
+Sending CMD55
+Sending CMD6
+Buswidth = 4, clock: 400000
+Sending CMD6
+Buswidth = 4, clock: 15000000
+Sending CMD16
+Sending CMD17
+Sending CMD16
+Sending CMD18
+Sending CMD12
+Sending CMD16
+Sending CMD18
+Sending CMD12
+Sending CMD16
+Sending CMD18
+Sending CMD12
+Sending CMD16
+Sending CMD18
+Sending CMD12
+Sending CMD16
+Sending CMD18
+dwmci_data_transfer: DATA ERROR!
+wait_for_bit_le32: Timeout (reg= mask=2 wait_set=)
+dwmci_send_cmd: DWMCI_IDINTEN mask 0x2 timeout.
+Sending CMD16
+dwmci_send_cmd: Timeout.
+Sending CMD16
+dwmci_send_cmd: Timeout.
+Sending CMD16
+dwmci_send_cmd: Timeout.
+Sending CMD16
+dwmci_send_cmd: Timeout.
+Sending CMD16
+dwmci_send_cmd: Timeout.
+Sending CMD16
+dwmci_send_cmd: Timeout.
+NOTICE:  BL31: v2.0(release):v2.0-580-g023bc019-dirty
+NOTICE:  BL31: Built : 13:46:06, Mar 15 2019
+
+U-Boot 2019.04-rc3-00063-g7ed34b8dc1-dirty (Mar 15 2019 - 14:20:01 +0100)
+...
+```
+
+Without this patch:
+```
+<TODO>
+```
+
+Signed-off-by: Daniel Gröber <daniel@dps.uibk.ac.at>
+---
+ arch/arm/dts/rk3399-nanopi-m4.dts |  4 ++++
+ arch/arm/dts/rk3399-nanopi4.dtsi  | 10 +++++-----
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/arch/arm/dts/rk3399-nanopi-m4.dts b/arch/arm/dts/rk3399-nanopi-m4.dts
+index 3f8afc4eaf..113056242c 100644
+--- a/arch/arm/dts/rk3399-nanopi-m4.dts
++++ b/arch/arm/dts/rk3399-nanopi-m4.dts
+@@ -65,3 +65,7 @@
+ 	regulator-always-on;
+ 	vin-supply = <&vdd_5v>;
+ };
++
++&sdmmc {
++	max-frequency = <15000000>;
++};
+diff --git a/arch/arm/dts/rk3399-nanopi4.dtsi b/arch/arm/dts/rk3399-nanopi4.dtsi
+index 0b3f6f22e3..ecd14c8039 100644
+--- a/arch/arm/dts/rk3399-nanopi4.dtsi
++++ b/arch/arm/dts/rk3399-nanopi4.dtsi
+@@ -703,15 +703,15 @@
+ };
+ 
+ &sdmmc {
+-       u-boot,dm-pre-reloc;
++	u-boot,dm-pre-reloc;
+ };
+ 
+ &sdhci {
+-       u-boot,dm-pre-reloc;
++	u-boot,dm-pre-reloc;
+ };
+ 
+ / {
+-        chosen {
+-                u-boot,spl-boot-order = "same-as-spl", &sdhci, &sdmmc;
+-        };
++	chosen {
++		u-boot,spl-boot-order = "same-as-spl", &sdhci, &sdmmc;
++	};
+ };
+-- 
+2.11.0
+

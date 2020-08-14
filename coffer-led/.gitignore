@@ -1,0 +1,11 @@
+.vs
+Release
+Debug
+*.componentinfo.xml
+*.elf
+*.o
+*.hex
+*.srec
+*.eeprom
+*.lss
+*.map

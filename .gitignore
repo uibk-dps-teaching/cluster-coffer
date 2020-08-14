@@ -1,0 +1,6 @@
+# Sketchup Files
+*.skb
+
+# Inventor Files
+lockfile.lck
+OldVersions/

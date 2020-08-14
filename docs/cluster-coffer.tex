@@ -1,0 +1,89 @@
+\documentclass[a4paper,notitlepage,parskip=full]{scrreprt}
+
+\title{Cluster Coffer Manual}
+\author{
+	Alexander Hirsch\\
+	\href{mailto:alex@dps.uibk.ac.at}{\texttt{alex@dps.uibk.ac.at}}
+	\and
+	Daniel Gröber\\
+	\href{mailto:daniel@dps.uibk.ac.at}{\texttt{daniel@dps.uibk.ac.at}}
+}
+\date{}
+
+% font
+\usepackage{microtype}
+\usepackage[no-math]{fontspec}
+	\setmainfont{TeX Gyre Termes}
+	\setsansfont{TeX Gyre Heros}
+	\setmonofont{Inconsolata}[Scale=0.9]
+	\addtokomafont{disposition}{\rmfamily}
+
+% page
+% \usepackage[margin=1in,showframe]{geometry}
+\usepackage[margin=1in]{geometry}
+
+% colour
+\usepackage{xcolor}
+	\definecolor{linkcolor}{cmyk}{1.0, 0.6, 0.0, 0.56}
+
+% links
+\usepackage{hyperref}
+	\hypersetup{
+		colorlinks      = true,
+		citecolor       = linkcolor,
+		citebordercolor = linkcolor,
+		linkcolor       = linkcolor,
+		linkbordercolor = linkcolor!40,
+		urlcolor        = linkcolor,
+		pdfstartview    = {XYZ null null null},
+		pdfpagemode     = UseOutlines,
+	}
+	\urlstyle{same}
+
+% math
+\usepackage{amsmath}
+
+% references
+\usepackage[capitalise,noabbrev]{cleveref}
+
+% graphics
+\usepackage{graphicx}
+\usepackage{pdfpages}
+
+% tables
+\usepackage{longtable}
+\usepackage{booktabs}
+
+% misc
+\usepackage{scrhack}
+
+\begin{document}
+
+\maketitle
+
+The \textit{Cluster Coffer} is a portable, all-in-one HPC cluster designed for demonstration purposes.
+Its design makes it ideal for cramped PR events.
+Just place it on a level surface, plug it in, and you are ready to compute.
+
+This document serves as a manual for assembly and maintenance.
+Furthermore, similar projects can be bootstrapped from this.
+Throughout the document, take note of the elegant, yet modular design.
+
+It mainly consists of one head node, 16 compute nodes, a switch, and power distribution.
+
+The first chapter is a step-by-step assembly guide.
+Most steps require detailed information found in the following chapters.
+It is recommended to read through this document from top to bottom before touching anything.
+
+\tableofcontents
+
+\include{assembly}
+\include{metalware}
+\include{electronics}
+\include{software}
+\include{gallery}
+
+\appendix
+\include{bom}
+
+\end{document}
